@@ -1,2 +1,5 @@
 /images/*
 !/images/.gitkeep
+
+/data/*
+!/data/.gitkeep

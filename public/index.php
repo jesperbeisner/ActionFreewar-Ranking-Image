@@ -2,18 +2,27 @@
 
 declare(strict_types=1);
 
+ini_set('display_errors', 'Off');
+
 $requestUri = $_SERVER['REQUEST_URI'];
 
-const FILE = __DIR__ . '/../images/afsrv-ranking.png';
+const IMAGE_FILE = __DIR__ . '/../images/afsrv-ranking.png';
+const COUNTER_FILE = __DIR__ . '/../data/counter.txt';
 
-if ($requestUri !== '/images/afsrv-ranking.png') {
-    echo 'Hallo :)';
-} else {
-    if (file_exists(__DIR__ . '/../images/afsrv-ranking.png')) {
-        if (time() - filemtime(FILE) < 300) {
+if ($requestUri === '/images/afsrv-ranking.png') {
+    if (!file_exists(COUNTER_FILE)) {
+        file_put_contents(COUNTER_FILE, 0);
+    }
+
+    $counter = file_get_contents(COUNTER_FILE);
+    $counter = $counter + 1;
+    file_put_contents(COUNTER_FILE, $counter);
+
+    if (file_exists(IMAGE_FILE)) {
+        if (time() - filemtime(IMAGE_FILE) < 300) {
             header("Content-type: image/png");
-            header('Content-Length: ' . filesize(__DIR__ . '/../images/afsrv-ranking.png'));
-            readfile(__DIR__ . '/../images/afsrv-ranking.png');
+            header('Content-Length: ' . filesize(IMAGE_FILE));
+            readfile(IMAGE_FILE);
             exit(0);
         }
     }
@@ -130,11 +139,19 @@ if ($requestUri !== '/images/afsrv-ranking.png') {
         }
     }
 
-    imagepng($image, __DIR__ . '/../images/afsrv-ranking.png');
+    imagepng($image, IMAGE_FILE);
 
     header("Content-type: image/png");
-    header('Content-Length: ' . filesize(__DIR__ . '/../images/afsrv-ranking.png'));
-    readfile(__DIR__ . '/../images/afsrv-ranking.png');
+    header('Content-Length: ' . filesize(IMAGE_FILE));
+    readfile(IMAGE_FILE);
 
     exit(0);
+} elseif ($requestUri === '/counter') {
+    if (file_exists(COUNTER_FILE)) {
+        echo 'Counter: ' . file_get_contents(COUNTER_FILE);
+    }
+} else {
+    echo 'Hallo :)';
 }
+
+exit(0);
