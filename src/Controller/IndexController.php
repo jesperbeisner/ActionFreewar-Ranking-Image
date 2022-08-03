@@ -13,7 +13,7 @@ class IndexController
     public function home(): never
     {
         ob_start();
-        require __DIR__ . '/../view/home.html.php';
+        require __DIR__ . '/../../view/home.html.php';
         echo ob_get_clean();
 
         exit(0);
