@@ -17,5 +17,5 @@ localhost:8200/images/afsrv-ranking.png
 docker-compose -f docker-compose.prod.yml up -d --build
 
 # Cronjob
-*/5 * * * * docker exec af-image-ranking-php-dev php bin/generate-image.php > /dev/null 2>&1
+*/5 * * * * docker exec af-image-ranking-php-prod php bin/generate-image.php > /dev/null 2>&1
 ```
