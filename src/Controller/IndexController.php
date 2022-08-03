@@ -29,12 +29,13 @@ class IndexController
         $counter = $counter + 1;
         file_put_contents(self::COUNTER_FILE, $counter);
 
+        header("Cache-Control: no-cache");
+        header("Content-type: image/png");
+
         if (file_exists(self::IMAGE_FILE)) {
-            header("Content-type: image/png");
             header('Content-Length: ' . filesize(self::IMAGE_FILE));
             readfile(self::IMAGE_FILE);
         } else {
-            header("Content-type: image/png");
             header('Content-Length: ' . filesize(self::PLACEHOLDER_FILE));
             readfile(self::PLACEHOLDER_FILE);
         }
