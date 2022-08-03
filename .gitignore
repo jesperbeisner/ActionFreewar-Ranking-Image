@@ -1,5 +1,2 @@
-/images/*
-!/images/.gitkeep
-
-/data/*
-!/data/.gitkeep
+/data/counter.txt
+/data/afsrv-ranking.png

@@ -1,0 +1,21 @@
+version: '3.9'
+
+services:
+  web:
+    image: caddy:2.5.2-alpine
+    container_name: af-image-ranking-caddy-prod
+    volumes:
+      - .:/var/www/html
+      - ./.docker/caddy:/etc/caddy
+    ports:
+      - '8200:80'
+    restart: always
+
+  php:
+    build:
+      dockerfile: .docker/php/Dockerfile-prod
+      context: .
+    container_name: af-image-ranking-php-prod
+    volumes:
+      - .:/var/www/html
+    restart: always

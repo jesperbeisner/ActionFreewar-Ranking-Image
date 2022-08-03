@@ -3,13 +3,15 @@ version: '3.9'
 services:
   web:
     image: caddy:2.5.2-alpine
+    container_name: af-image-ranking-caddy-dev
     volumes:
       - .:/var/www/html
       - ./.docker/caddy:/etc/caddy
     ports:
-      - '8200:80'
+      - '8080:80'
 
   php:
     build: ./.docker/php
+    container_name: af-image-ranking-php-dev
     volumes:
       - .:/var/www/html
